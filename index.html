@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Sistema de Cobranza</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    max-width: 950px;
+    margin: 30px auto;
+    background: #eef0f2;
+    color: #2b2b2b;
+  }
+  h1 {
+    color: #7a1f1f;
+    border-bottom: 3px solid #7a1f1f;
+    padding-bottom: 10px;
+    font-size: 26px;
+  }
+  h2 {
+    font-size: 17px;
+    color: #444;
+    margin-top: 0;
+    border-left: 4px solid #7a1f1f;
+    padding-left: 10px;
+  }
+  .tabs { display: flex; gap: 6px; margin-bottom: 0; }
+  .tab-btn {
+    padding: 11px 20px;
+    border: none;
+    background: #d8d8d8;
+    color: #555;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+  .tab-btn:hover { background: #c7c7c7; }
+  .tab-btn.active { background: #7a1f1f; color: white; }
+  .panel {
+    display: none;
+    background: white;
+    padding: 24px;
+    border-radius: 0 10px 10px 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .panel.active { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13.5px; }
+  th, td { padding: 9px 10px; text-align: left; }
+  th {
+    background: #7a1f1f;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+  tbody tr { border-bottom: 1px solid #eee; }
+  tbody tr:nth-child(even) { background: #faf7f7; }
+  tbody tr:hover { background: #f3e6e6; }
+
+  input, select {
+    padding: 9px 10px;
+    margin: 4px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  input:focus, select:focus { outline: none; border-color: #7a1f1f; }
+
+  button.action {
+    background: #7a1f1f;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+  button.action:hover { background: #5f1717; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .msg {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 13.5px;
+    min-height: 18px;
+    color: #2e7d32;
+  }
+
+  /* Badges de estado */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+  }
+  .badge-mora, .badge-abierto, .badge-no_contactado, .badge-rechazo { background: #c0392b; }
+  .badge-en_proceso, .badge-media, .badge-contactado { background: #e0932b; }
+  .badge-pagado, .badge-cerrado, .badge-promesa_pago, .badge-baja { background: #2e7d32; }
+  .badge-alta, .badge-judicial { background: #8e1e1e; }
+  .badge-preventiva { background: #2e7d32; }
+  .badge-intensiva { background: #e0932b; }
+</style>
+</head>
+<body>
+
+<h1>Sistema de Cobranza </h1>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="mostrarTab('deudas')">Deudas</button>
+  <button class="tab-btn" onclick="mostrarTab('operadores')">Operadores</button>
+  <button class="tab-btn" onclick="mostrarTab('tickets')">Tickets</button>
+  <button class="tab-btn" onclick="mostrarTab('gestiones')">Gestiones</button>
+</div>
+
+<!-- PANEL DEUDAS -->
+<div id="panel-deudas" class="panel active">
+  <h2>Registrar nueva deuda</h2>
+  <div class="form-grid">
+    <input id="d-cliente" placeholder="Cliente">
+    <input id="d-monto" placeholder="Monto" type="number" step="0.01">
+    <input id="d-fecha" placeholder="Fecha vencimiento" type="date">
+    <input id="d-descripcion" placeholder="Descripción">
+  </div>
+  <button class="action" onclick="crearDeuda()">Registrar Deuda</button>
+  <div class="msg" id="d-msg"></div>
+
+  <h2>Lista de deudas</h2>
+  <button class="action" onclick="cargarDeudas()">Actualizar lista</button>
+  <table id="tabla-deudas">
+    <thead><tr><th>ID</th><th>Cliente</th><th>Monto</th><th>Vence</th><th>Estado</th><th>Tipo Cobranza</th><th>Interés</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- PANEL OPERADORES -->
+<div id="panel-operadores" class="panel">
+  <h2>Registrar operador</h2>
+  <input id="o-nombre" placeholder="Nombre del operador">
+  <button class="action" onclick="crearOperador()">Registrar Operador</button>
+  <div class="msg" id="o-msg"></div>
+
+  <h2>Lista de operadores</h2>
+  <button class="action" onclick="cargarOperadores()">Actualizar lista</button>
+  <table id="tabla-operadores">
+    <thead><tr><th>ID</th><th>Nombre</th><th>Disponible</th><th>Carga actual</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- PANEL TICKETS -->
+<div id="panel-tickets" class="panel">
+  <h2>Generar ticket de cobranza</h2>
+  <div class="form-grid">
+    <input id="t-deuda-id" placeholder="ID de la deuda" type="number">
+    <select id="t-prioridad">
+      <option value="baja">Prioridad Baja</option>
+      <option value="media" selected>Prioridad Media</option>
+      <option value="alta">Prioridad Alta</option>
+    </select>
+  </div>
+  <button class="action" onclick="crearTicket()">Generar Ticket</button>
+  <div class="msg" id="t-msg"></div>
+
+  <h2>Lista de tickets</h2>
+  <button class="action" onclick="cargarTickets()">Actualizar lista</button>
+  <table id="tabla-tickets">
+    <thead><tr><th>ID</th><th>Cliente</th><th>Monto</th><th>Operador</th><th>Prioridad</th><th>Estado</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- PANEL GESTIONES -->
+<div id="panel-gestiones" class="panel">
+  <h2>Registrar gestión de cobranza</h2>
+  <div class="form-grid">
+    <input id="g-ticket-id" placeholder="ID del ticket" type="number">
+    <select id="g-canal">
+      <option value="llamada">Llamada telefónica</option>
+      <option value="correo">Correo electrónico</option>
+      <option value="sms_whatsapp">SMS / WhatsApp</option>
+      <option value="carta_judicial">Carta Judicial</option>
+    </select>
+    <select id="g-resultado">
+      <option value="contactado">Contactado</option>
+      <option value="no_contactado">No contactado</option>
+      <option value="promesa_pago">Promesa de pago</option>
+      <option value="rechazo">Rechazo</option>
+    </select>
+    <input id="g-observaciones" placeholder="Observaciones">
+  </div>
+  <button class="action" onclick="crearGestion()">Registrar Gestión</button>
+  <div class="msg" id="g-msg"></div>
+
+  <h2>Lista de gestiones</h2>
+  <button class="action" onclick="cargarGestiones()">Actualizar lista</button>
+  <table id="tabla-gestiones">
+    <thead><tr><th>ID</th><th>Ticket</th><th>Canal</th><th>Resultado</th><th>Fecha</th><th>Observaciones</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+const API = 'http://localhost:3000';
+
+function mostrarTab(nombre) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + nombre).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ---------- DEUDAS ----------
+async function crearDeuda() {
+  const body = {
+    cliente: document.getElementById('d-cliente').value,
+    monto: parseFloat(document.getElementById('d-monto').value),
+    fecha_vencimiento: document.getElementById('d-fecha').value,
+    estado: 'mora',
+    descripcion: document.getElementById('d-descripcion').value
+  };
+  const res = await fetch(API + '/deudas', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const data = await res.json();
+  document.getElementById('d-msg').textContent = res.ok ? 'Deuda registrada con ID ' + data.id : 'Error: ' + data.error;
+  cargarDeudas();
+}
+
+async function cargarDeudas() {
+  const res = await fetch(API + '/deudas');
+  const deudas = await res.json();
+  const tbody = document.querySelector('#tabla-deudas tbody');
+  tbody.innerHTML = '';
+  for (const d of deudas) {
+    let interes = '-';
+    try {
+      const r2 = await fetch(API + '/deudas/' + d.id + '/interes');
+      const info = await r2.json();
+      interes = info.monto_actualizado ?? '-';
+      d.tipo_cobranza_sugerido = info.tipo_cobranza_sugerido;
+    } catch(e) {}
+    tbody.innerHTML += `<tr>
+      <td>${d.id}</td><td>${d.cliente}</td><td>${d.monto}</td>
+      <td>${(d.fecha_vencimiento || '').substring(0,10)}</td>
+      <td>${d.estado}</td><td>${d.tipo_cobranza_sugerido || d.tipo_cobranza}</td>
+      <td>${interes}</td></tr>`;
+  }
+}
+
+// ---------- OPERADORES ----------
+async function crearOperador() {
+  const body = { nombre: document.getElementById('o-nombre').value };
+  const res = await fetch(API + '/operadores', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const data = await res.json();
+  document.getElementById('o-msg').textContent = res.ok ? 'Operador registrado con ID ' + data.id : 'Error: ' + data.error;
+  cargarOperadores();
+}
+
+async function cargarOperadores() {
+  const res = await fetch(API + '/operadores');
+  const ops = await res.json();
+  const tbody = document.querySelector('#tabla-operadores tbody');
+  tbody.innerHTML = ops.map(o => `<tr><td>${o.id}</td><td>${o.nombre}</td><td>${o.disponible ? 'Sí' : 'No'}</td><td>${o.carga_actual}</td></tr>`).join('');
+}
+
+// ---------- TICKETS ----------
+async function crearTicket() {
+  const body = {
+    deuda_id: parseInt(document.getElementById('t-deuda-id').value),
+    prioridad: document.getElementById('t-prioridad').value
+  };
+  const res = await fetch(API + '/tickets', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const data = await res.json();
+  document.getElementById('t-msg').textContent = res.ok ? 'Ticket generado con ID ' + data.id : 'Error: ' + data.error;
+  cargarTickets();
+}
+
+async function cargarTickets() {
+  const res = await fetch(API + '/tickets');
+  const tickets = await res.json();
+  const tbody = document.querySelector('#tabla-tickets tbody');
+  tbody.innerHTML = tickets.map(t => `<tr>
+    <td>${t.id}</td><td>${t.cliente}</td><td>${t.monto}</td>
+    <td>${t.operador_nombre || '-'}</td><td>${t.prioridad}</td><td>${t.estado}</td></tr>`).join('');
+}
+
+// ---------- GESTIONES ----------
+async function crearGestion() {
+  const body = {
+    ticket_id: parseInt(document.getElementById('g-ticket-id').value),
+    canal: document.getElementById('g-canal').value,
+    resultado: document.getElementById('g-resultado').value,
+    observaciones: document.getElementById('g-observaciones').value
+  };
+  const res = await fetch(API + '/gestiones', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const data = await res.json();
+  document.getElementById('g-msg').textContent = res.ok ? 'Gestión registrada con ID ' + data.id : 'Error: ' + data.error;
+  cargarGestiones();
+  cargarTickets();
+}
+
+async function cargarGestiones() {
+  const res = await fetch(API + '/gestiones');
+  const gestiones = await res.json();
+  const tbody = document.querySelector('#tabla-gestiones tbody');
+  tbody.innerHTML = gestiones.map(g => `<tr>
+    <td>${g.id}</td><td>${g.ticket_id}</td><td>${g.canal}</td><td>${g.resultado}</td>
+    <td>${(g.fecha_gestion || '').substring(0,16).replace('T',' ')}</td><td>${g.observaciones || '-'}</td></tr>`).join('');
+}
+
+// Carga inicial
+cargarDeudas();
+cargarOperadores();
+cargarTickets();
+cargarGestiones();
+</script>
+</body>
+</html>
