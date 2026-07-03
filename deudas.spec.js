@@ -312,3 +312,52 @@ test.describe('LOS 5 TIPOS DE ERROR DE CAJA NEGRA (pág. 51 del material)', () =
   });
 
 });
+
+
+// ==================== COMPLEJIDAD CICLOMÁTICA — POST /tickets (V(G) = 4) ====================
+// Las 4 rutas independientes que cubren toda la lógica de decisión del endpoint
+
+test.describe('COMPLEJIDAD CICLOMÁTICA — POST /tickets (V(G) = 4)', () => {
+
+  test('CC-01 — Ruta 1 (1-2-3-11): falta el campo deuda_id → retorna 400', async ({ request }) => {
+    const res = await request.post(API + '/tickets', { data: { prioridad: 'alta' } });
+    expect(res.status()).toBe(400);
+  });
+
+  test('CC-02 — Ruta 2 (1-2-4-5-6-11): deuda_id no existe en la BD → retorna 404', async ({ request }) => {
+    const res = await request.post(API + '/tickets', { data: { deuda_id: 999999 } });
+    expect(res.status()).toBe(404);
+  });
+
+  test('CC-03 — Ruta 3 (1-2-4-5-7-8-9-11): sin operadores disponibles → retorna 400', async ({ request }) => {
+    const d = await request.post(API + '/deudas', { data: { cliente: 'CC03 Cliente', monto: 700, fecha_vencimiento: '2026-01-01' } });
+    const { id: deudaId2 } = await d.json();
+
+    const opsRes = await request.get(API + '/operadores');
+    const operadores = await opsRes.json();
+    const habilitados = operadores.filter(o => o.disponible);
+
+    for (const o of habilitados) {
+      await request.put(API + `/operadores/${o.id}`, { data: { disponible: false } });
+    }
+
+    const res = await request.post(API + '/tickets', { data: { deuda_id: deudaId2 } });
+    expect(res.status()).toBe(400);
+
+    for (const o of habilitados) {
+      await request.put(API + `/operadores/${o.id}`, { data: { disponible: true } });
+    }
+  });
+
+  test('CC-04 — Ruta 4 (1-2-4-5-7-8-10-11): todo válido → ticket creado con 201', async ({ request }) => {
+    await request.post(API + '/operadores', { data: { nombre: 'Operador CC04', disponible: true } });
+    const d = await request.post(API + '/deudas', { data: { cliente: 'CC04 Cliente', monto: 700, fecha_vencimiento: '2026-01-01' } });
+    const { id: deudaId3 } = await d.json();
+
+    const res = await request.post(API + '/tickets', { data: { deuda_id: deudaId3 } });
+    expect(res.status()).toBe(201);
+    const body = await res.json();
+    expect(body).toHaveProperty('operador_id');
+  });
+
+});

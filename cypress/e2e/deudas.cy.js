@@ -95,6 +95,13 @@ describe('SISTEMA DE COBRANZA', () => {
     });
   });
 
+
+  it('CC-01 — POST /tickets sin deuda_id debe retornar 400 (Ruta 1 de complejidad ciclomática)', () => {
+  cy.request({ method: 'POST', url: API + '/tickets', body: { prioridad: 'alta' }, failOnStatusCode: false }).then(res => {
+    expect(res.status).to.eq(400);
+  });
+});
+
   // ---------- MÓDULO GESTIONES (HOSTIGAMIENTO) ----------
   it('TC-12 — POST /gestiones: registrar gestión con resultado "promesa_pago"', () => {
     cy.request('POST', API + '/gestiones', {
@@ -320,6 +327,57 @@ describe('LOS 5 TIPOS DE ERROR DE CAJA NEGRA ', () => {
   it('EF-05 — Error de inicio/cierre: el servidor debe responder inmediatamente sin necesitar "calentamiento"', () => {
     cy.request('GET', API + '/deudas').then(res => {
       expect(res.status).to.eq(200);
+    });
+  });
+
+});
+
+
+// ==================== COMPLEJIDAD CICLOMÁTICA — POST /tickets (V(G) = 4) ====================
+// Las 4 rutas independientes que cubren toda la lógica de decisión del endpoint
+
+describe('COMPLEJIDAD CICLOMÁTICA — POST /tickets (V(G) = 4)', () => {
+
+  it('CC-01 — Ruta 1 (1-2-3-11): falta el campo deuda_id → retorna 400', () => {
+    cy.request({
+      method: 'POST', url: API + '/tickets', body: { prioridad: 'alta' }, failOnStatusCode: false
+    }).then(res => {
+      expect(res.status).to.eq(400);
+    });
+  });
+
+  it('CC-02 — Ruta 2 (1-2-4-5-6-11): deuda_id no existe en la BD → retorna 404', () => {
+    cy.request({
+      method: 'POST', url: API + '/tickets', body: { deuda_id: 999999 }, failOnStatusCode: false
+    }).then(res => {
+      expect(res.status).to.eq(404);
+    });
+  });
+
+  it('CC-03 — Ruta 3 (1-2-4-5-7-8-9-11): sin operadores disponibles → retorna 400', () => {
+    cy.request('POST', API + '/deudas', { cliente: 'CC03 Cliente', monto: 700, fecha_vencimiento: '2026-01-01' }).then(deuda => {
+      cy.request('GET', API + '/operadores').then(res => {
+        const habilitados = res.body.filter(o => o.disponible);
+        habilitados.forEach(o => cy.request('PUT', API + `/operadores/${o.id}`, { disponible: false }));
+
+        cy.request({
+          method: 'POST', url: API + '/tickets', body: { deuda_id: deuda.body.id }, failOnStatusCode: false
+        }).then(res2 => {
+          expect(res2.status).to.eq(400);
+          habilitados.forEach(o => cy.request('PUT', API + `/operadores/${o.id}`, { disponible: true }));
+        });
+      });
+    });
+  });
+
+  it('CC-04 — Ruta 4 (1-2-4-5-7-8-10-11): todo válido → ticket creado con 201', () => {
+    cy.request('POST', API + '/operadores', { nombre: 'Operador CC04', disponible: true }).then(() => {
+      cy.request('POST', API + '/deudas', { cliente: 'CC04 Cliente', monto: 700, fecha_vencimiento: '2026-01-01' }).then(deuda => {
+        cy.request('POST', API + '/tickets', { deuda_id: deuda.body.id }).then(res => {
+          expect(res.status).to.eq(201);
+          expect(res.body).to.have.property('operador_id');
+        });
+      });
     });
   });
 
