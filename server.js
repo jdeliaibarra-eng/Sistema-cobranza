@@ -49,10 +49,30 @@ app.put('/deudas/:id', async (req, res) => {
   res.json(result.rows[0]);
 });
 
+// Elimina una deuda junto con sus tickets y gestiones asociadas (integridad referencial)
 app.delete('/deudas/:id', async (req, res) => {
-  const result = await pool.query('DELETE FROM deudas WHERE id = $1 RETURNING *', [req.params.id]);
-  if (result.rows.length === 0) return res.status(404).json({ error: 'No encontrado' });
-  res.json({ mensaje: 'Eliminado correctamente', registro: result.rows[0] });
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const deuda = await client.query('SELECT * FROM deudas WHERE id = $1', [req.params.id]);
+    if (deuda.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'No encontrado' });
+    }
+    await client.query(
+      'DELETE FROM gestiones WHERE ticket_id IN (SELECT id FROM tickets WHERE deuda_id = $1)',
+      [req.params.id]
+    );
+    await client.query('DELETE FROM tickets WHERE deuda_id = $1', [req.params.id]);
+    const result = await client.query('DELETE FROM deudas WHERE id = $1 RETURNING *', [req.params.id]);
+    await client.query('COMMIT');
+    res.json({ mensaje: 'Eliminado correctamente (junto con tickets y gestiones asociadas)', registro: result.rows[0] });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    res.status(500).json({ error: 'No se pudo eliminar la deuda', detalle: err.message });
+  } finally {
+    client.release();
+  }
 });
 
 // ==================== MÓDULO: CÁLCULO DE INTERESES (RF-003) ====================
@@ -121,6 +141,28 @@ app.put('/operadores/:id', async (req, res) => {
   res.json(result.rows[0]);
 });
 
+// Elimina un operador; los tickets que tenía asignados quedan sin operador (operador_id = NULL)
+app.delete('/operadores/:id', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const operador = await client.query('SELECT * FROM operadores WHERE id = $1', [req.params.id]);
+    if (operador.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'No encontrado' });
+    }
+    await client.query('UPDATE tickets SET operador_id = NULL WHERE operador_id = $1', [req.params.id]);
+    const result = await client.query('DELETE FROM operadores WHERE id = $1 RETURNING *', [req.params.id]);
+    await client.query('COMMIT');
+    res.json({ mensaje: 'Operador eliminado (sus tickets quedaron sin asignar)', registro: result.rows[0] });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    res.status(500).json({ error: 'No se pudo eliminar el operador', detalle: err.message });
+  } finally {
+    client.release();
+  }
+});
+
 // ==================== MÓDULO: FABRICACIÓN Y ASIGNACIÓN DE TICKETS (RF-005 a RF-008) ====================
 
 app.get('/tickets', async (req, res) => {
@@ -177,6 +219,28 @@ app.put('/tickets/:id', async (req, res) => {
   res.json(result.rows[0]);
 });
 
+// Elimina un ticket junto con las gestiones registradas sobre él
+app.delete('/tickets/:id', async (req, res) => {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const ticket = await client.query('SELECT * FROM tickets WHERE id = $1', [req.params.id]);
+    if (ticket.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: 'No encontrado' });
+    }
+    await client.query('DELETE FROM gestiones WHERE ticket_id = $1', [req.params.id]);
+    const result = await client.query('DELETE FROM tickets WHERE id = $1 RETURNING *', [req.params.id]);
+    await client.query('COMMIT');
+    res.json({ mensaje: 'Ticket eliminado (junto con sus gestiones asociadas)', registro: result.rows[0] });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    res.status(500).json({ error: 'No se pudo eliminar el ticket', detalle: err.message });
+  } finally {
+    client.release();
+  }
+});
+
 // ==================== MÓDULO: HOSTIGAMIENTO / GESTIONES (RF-009 a RF-013) ====================
 
 app.get('/gestiones', async (req, res) => {
@@ -211,6 +275,13 @@ app.post('/gestiones', async (req, res) => {
   }
 
   res.status(201).json(nuevaGestion.rows[0]);
+});
+
+// Elimina un registro de gestión individual (corrección de errores de digitación)
+app.delete('/gestiones/:id', async (req, res) => {
+  const result = await pool.query('DELETE FROM gestiones WHERE id = $1 RETURNING *', [req.params.id]);
+  if (result.rows.length === 0) return res.status(404).json({ error: 'No encontrado' });
+  res.json({ mensaje: 'Gestión eliminada correctamente', registro: result.rows[0] });
 });
 
 // Historial completo de gestiones de una deuda específica (RUS-002)
