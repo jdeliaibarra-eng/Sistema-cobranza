@@ -1,3 +1,4 @@
+.env
 node_modules/
 cypress/reports/
 cypress/videos/

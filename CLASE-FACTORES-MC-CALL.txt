@@ -1,0 +1,1058 @@
+ANEXO TÉCNICO – CÓMO APLICAR LOS FACTORES DE CALIDAD DE McCALL EN PROYECTOS REALES
+UNI–FIIS | Sistemas de Calidad de Software
+
+
+
+1. INTRODUCCIÓN
+El modelo de McCall establece 11 factores de calidad evaluables a través de métricas técnicas y subjetivas.
+Mientras el documento principal presenta definiciones conceptuales, este anexo explica:
+
+   1.   Cómo obtener información para medir cada factor.
+   2.   Qué instrumentos utilizar.
+   3.   Qué pasos seguir.
+   4.   Cómo calcular las métricas.
+   5.   Cómo se usa en el mundo real, sustentado con cinco ejemplos verificables.
+
+Este anexo convierte el modelo en un procedimiento operativo aplicable por estudiantes y profesionales.
+
+
+
+2. PROCEDIMIENTO GENERAL PARA EVALUAR CALIDAD SEGÚN McCALL
+
+Paso 1 — Definir el sistema objetivo
+   •    Identificar el producto a evaluar (web, móvil, API, escritorio).
+   •    Precisar el alcance: módulos, funciones críticas, usuarios involucrados.
+Paso 2 — Seleccionar factores de McCall
+Antes de evaluar calidad, el equipo debe identificar cuáles de los 11 factores son relevantes para el proyecto. La selección depende
+del tipo de sistema, su criticidad, su uso esperado y su ciclo de vida.
+
+Los 11 factores del Modelo de McCall
+
+Operación del producto
+
+   1.   Corrección
+   2.   Fiabilidad
+   3.   Eficiencia
+   4.   Integridad
+   5.   Usabilidad
+
+Revisión del producto
+
+   6. Mantenibilidad
+   7. Flexibilidad
+   8. Facilidad de prueba (Testability)
+
+Transición del producto
+
+   9. Portabilidad
+   10. Reusabilidad
+   11. Interoperabilidad
+
+222222222222
+
+La elección debe considerar la naturaleza del producto.
+1. Aplicaciones críticas (banca, salud, aeronáutica, sector público sensible)
+Aquí es indispensable garantizar funcionamiento correcto, sin fallas y seguridad.
+
+Se deben priorizar:
+
+   1.   Corrección
+   2.   Fiabilidad
+   3.   Integridad
+   4.   Eficiencia
+   5.   Facilidad de prueba
+   6.   Usabilidad (en procesos críticos, errores humanos pueden causar incidentes)
+   7.   Mantenibilidad (para corregir fallas rápidamente)
+
+Justificación:
+Una falla o un acceso indebido puede generar consecuencias graves.
+
+
+
+
+2. Aplicaciones de uso masivo (portales web, apps móviles, redes sociales)
+Aquí lo más importante es la experiencia del usuario y el desempeño.
+
+Factores recomendados:
+
+   1. Usabilidad
+   2. Eficiencia
+   3. Fiabilidad
+   4. Corrección
+   5. Portabilidad (Android/iOS, navegadores)
+   6. Interoperabilidad (APIs externas)
+
+Justificación:
+El usuario abandona rápidamente las aplicaciones lentas o difíciles de usar.
+
+
+
+
+3. Proyectos a largo plazo o de mantenimiento continuo
+Se prioriza la posibilidad de cambiar, extender o depurar el software.
+
+Factores recomendados:
+
+   1.   Mantenibilidad
+   2.   Flexibilidad
+   3.   Reusabilidad
+   4.   Facilidad de prueba
+   5.   Consistencia y modularidad (métricas asociadas)
+
+Justificación:
+El costo total del proyecto depende fuertemente del mantenimiento.
+
+
+
+
+4. Sistemas que deben integrarse con otros (ERP, Gobierno Digital, banca abierta)
+Sistemas que interactúan con APIs internas o externas.
+Factores recomendados:
+
+   1.   Interoperabilidad
+   2.   Integridad
+   3.   Portabilidad
+   4.   Corrección
+   5.   Fiabilidad
+   6.   Estandarización de datos y comunicaciones (métricas de McCall)
+
+Justificación:
+Deben intercambiar datos sin errores, bajo estándares aceptados.
+
+
+
+
+5. Sistemas multiplataforma (Windows, Linux, macOS; Web + Móvil)
+Factores recomendados:
+
+   1.   Portabilidad
+   2.   Reusabilidad
+   3.   Flexibilidad
+   4.   Eficiencia
+   5.   Corrección
+
+Justificación:
+Los equipos buscan no reescribir varias veces el mismo software.
+
+
+
+
+6. Sistemas en investigación, prototipos o proyectos académicos
+Factores recomendados:
+
+   1.   Corrección
+   2.   Usabilidad
+   3.   Mantenibilidad
+   4.   Portabilidad
+   5.   Flexibilidad
+
+Justificación:
+Los prototipos deben funcionar, ser entendibles, modificables y replicables.
+
+
+
+
+7. Sistemas industriales o de automatización
+Factores recomendados:
+
+   1.   Fiabilidad
+   2.   Corrección
+   3.   Eficiencia
+   4.   Integridad
+   5.   Interoperabilidad
+   6.   Portabilidad
+
+Justificación:
+Se requiere continuidad operativa y comunicación con hardware/software especializado.
+⭐ RESUMEN TABULAR (COMPLETO Y PROFESIONAL)
+Tipo de Proyecto                                Factores de McCall Recomendados
+
+Críticos           Corrección, Fiabilidad, Integridad, Eficiencia, Usabilidad, Mantenibilidad, Facilidad de prueba
+
+Uso masivo         Usabilidad, Eficiencia, Fiabilidad, Corrección, Portabilidad, Interoperabilidad
+
+Larga duración     Mantenibilidad, Flexibilidad, Reusabilidad, Facilidad de prueba, Corrección
+
+Integración        Interoperabilidad, Integridad, Portabilidad, Fiabilidad, Corrección
+
+Multiplataforma Portabilidad, Reusabilidad, Flexibilidad, Eficiencia, Corrección
+
+Prototipos         Corrección, Usabilidad, Mantenibilidad, Flexibilidad, Portabilidad
+
+Automatización Fiabilidad, Corrección, Eficiencia, Integridad, Interoperabilidad, Portabilidad
+
+
+
+
+222222222222
+
+Paso 3 — Asignar métricas medibles
+Ejemplos:
+
+333333333333
+✅ PASO 3 — Asignar métricas medibles (LOS 11 FACTORES COMPLETOS)
+Las métricas deben cumplir:
+
+   •   Ser medibles objetivamente cuando sea posible.
+   •   Ser repetibles.
+   •   Tener fórmulas claras.
+   •   Poder aplicarse en laboratorio o en operación real.
+
+A continuación se presentan métricas recomendadas por factor, basadas en uso real en industria (banca, ERP, educación, salud y
+gobierno).
+
+
+
+1. CORRECCIÓN
+Definición: Grado en que el software cumple con los requisitos funcionales.
+
+✔ Métricas recomendadas
+
+   1. % de Casos de Prueba Aprobados
+   2. Cobertura de requisitos (RTM – Requirements Traceability Matrix)
+
+
+
+
+   3. Defectos por KLOC (métrica clásica en mantenimiento)
+
+
+
+2. FIABILIDAD
+Definición: Probabilidad de que el sistema funcione sin fallas.
+
+✔ Métricas recomendadas
+
+   1. MTBF (Mean Time Between Failures)
+
+
+
+
+   2. Tasa de fallas por hora o por transacción
+   3. Disponibilidad (%)
+
+
+
+
+3. EFICIENCIA
+Definición: Uso de recursos y tiempos de respuesta.
+
+✔ Métricas recomendadas
+
+   1.   Tiempo de respuesta medio (ms)
+   2.   Throughput (transacciones por segundo)
+   3.   Uso de CPU / RAM durante operaciones críticas
+   4.   Tiempo de carga inicial (para apps web/móviles)
+
+
+
+4. INTEGRIDAD
+Definición: Nivel de protección contra acceso no autorizado.
+
+✔ Métricas recomendadas
+
+   1. Checklist de controles de seguridad
+      (porcentaje de ítems cumplidos: autenticación, autorización, logs, hashing, roles, validación)
+   2. Tasa de vulnerabilidades encontradas
+
+
+
+
+   3. Índice OWASP Top 10
+      Cantidad de riesgos del Top 10 presentes/no mitigados.
+
+
+
+5. USABILIDAD
+Definición: Facilidad de aprendizaje, uso y comprensión del sistema.
+
+✔ Métricas recomendadas
+
+   1. Encuesta Likert (1–5) transformada a porcentaje
+
+
+
+
+   2. Tiempo de aprendizaje (minutos para completar tarea).
+   3. Tasa de errores del usuario
+
+
+
+
+   4. Tareas completadas correctamente (%)
+      (métricas clásicas de estudios de UX)
+6. MANTENIBILIDAD
+Definición: Facilidad para corregir errores o modificar el sistema.
+
+✔ Métricas recomendadas
+
+   1. MTTR (Mean Time To Repair)
+
+
+
+
+   2. Complejidad ciclomática (McCabe)
+      Valor ideal: ≤ 10 por módulo.
+   3. Índice de mantenibilidad (MI)
+      Usado por Visual Studio, Radon, SonarQube.
+   4. Modularidad (número de módulos independientes)
+
+
+
+7. FLEXIBILIDAD
+Definición: Esfuerzo necesario para modificar el software.
+
+✔ Métricas recomendadas
+
+   1. N° de módulos impactados por un cambio
+      (mientras menos módulos se afecten, más flexible).
+   2. Dependencias entre módulos (grado de acoplamiento)
+      Herramientas: SonarQube, Structure101.
+   3. Tiempo de implementación de un cambio simple
+      Comparación histórica.
+
+
+
+8. FACILIDAD DE PRUEBA (TESTABILITY)
+Definición: Facilidad para verificar que el software funciona correctamente.
+
+✔ Métricas recomendadas
+
+   1. Cobertura de pruebas (%)
+      Unitarias, integración, end-to-end.
+
+
+
+
+   2. Disponibilidad de logs y mensajes de error (instrumentación)
+      Checklist de instrumentación implementada.
+   3. Número mínimo de casos de prueba estimado por complejidad ciclomática.
+
+
+
+9. PORTABILIDAD
+Definición: Facilidad para migrar a nuevos entornos.
+✔ Métricas recomendadas
+
+   1. N° de plataformas donde funciona sin cambios
+      Windows, Linux, Android, navegadores.
+   2. Esfuerzo de migración (horas/hombre)
+      Cuantificación real basada en experiencia.
+   3. Checklist de independencia del hardware/SO
+      Puntos cumplidos vs. puntos evaluados.
+
+
+
+10. REUSABILIDAD
+Definición: Capacidad de usar partes del software en otros proyectos.
+
+✔ Métricas recomendadas
+
+   1. N° de componentes reutilizables
+      Clases, funciones, módulos exportables.
+   2. Grado de generalidad (si sirve en múltiples contextos).
+   3. % de código dependiente del contexto
+      Mientras menos dependencias, mayor reusabilidad.
+
+
+
+11. INTEROPERABILIDAD
+Definición: Capacidad de integrarse con otros sistemas.
+
+✔ Métricas recomendadas
+   1. N° de APIs compatibles o estandarizadas
+      REST, SOAP, JSON, XML.
+   2. % de cumplimiento de estándares de comunicación
+      (ej.: ISO 20022 para banca, HL7 en salud).
+   3. Tiempo promedio de integración con un sistema externo
+   4. Errores de intercambio de datos por transacción
+
+
+
+
+⭐ RESUMEN TABULAR
+      Factor                        Métricas medibles recomendadas
+
+Corrección       % casos aprobados, cobertura de requisitos, defectos/KLOC
+
+Fiabilidad       MTBF, tasa de fallas, disponibilidad
+
+Eficiencia       Tiempo de respuesta, throughput, CPU/RAM
+
+Integridad       Checklist seguridad, vulnerabilidades/KLOC, OWASP Top 10
+
+Usabilidad       Likert, tiempo de aprendizaje, tasa de errores, tareas completadas
+
+Mantenibilidad   MTTR, complejidad ciclomática, MI, modularidad
+
+Flexibilidad     Módulos impactados, acoplamiento, tiempo por cambio
+       Factor                          Métricas medibles recomendadas
+
+Facilidad de prueba Cobertura, instrumentación, casos mínimos
+
+Portabilidad        Plataformas soportadas, horas de migración, checklist
+
+Reusabilidad        Componentes reutilizables, generalidad, % dependencia
+
+Interoperabilidad   APIs compatibles, estándares, tiempo de integración, errores/transacción
+
+
+
+333333333333
+
+Paso 4 — Recolectar datos
+Tecnologías permitidas:
+
+✅ Tecnologías permitidas
+Para evaluar los 11 factores de calidad del modelo de McCall, los equipos deben usar instrumentos confiables que produzcan datos
+verificables.
+Las tecnologías permitidas se clasifican según el tipo de información que permiten obtener.
+
+
+
+1. Pruebas automatizadas (Selenium, JMeter, Playwright, Cypress)
+Para qué son
+
+   •   Selenium: Es un framework de código abierto para la automatización de pruebas funcionales de navegadores web.
+          o    Permite controlar navegadores a través de diferentes lenguajes de programación como Java, Python o C#.
+          o    Es muy popular y tiene una gran comunidad, especialmente en proyectos que usan Java.
+          o    Su arquitectura cliente-servidor puede generar sobrecarga de rendimiento.
+  •    JMeter: Se utiliza principalmente para realizar pruebas de carga y rendimiento a aplicaciones y servidores.
+           o Mide cómo se comporta un sitio web o servicio cuando muchos usuarios lo utilizan simultáneamente.
+           o Ayuda a identificar cuellos de botella y problemas de escalabilidad.
+  •    Playwright: Es un framework de automatización moderno que ofrece pruebas más rápidas y estables.
+           o Proporciona acceso directo al navegador, lo que reduce la latencia.
+           o Es ideal para aplicaciones web modernas y complejas, con soporte para múltiples lenguajes (JavaScript, Python, Java,
+               C#).
+           o Incluye herramientas avanzadas como interceptación de red y generación automática de reportes.
+  •    Cypress: Es un framework de pruebas más enfocado en el desarrollador, que se ejecuta en el mismo bucle de JavaScript que la
+       aplicación.
+           o Ofrece pruebas más rápidas y confiables, ya que no dependen de una comunicación remota con el navegador.
+           o Es fácil de usar para aplicaciones web modernas, pero está limitado a JavaScript (y TypeScript) y a la compatibilidad
+               con menos navegadores que Selenium.
+
+¿Para qué sirven?
+  •    Medir Corrección, Fiabilidad, Eficiencia, Testabilidad y Interoperabilidad.
+  •    Ejecutar cientos de casos de prueba sin intervención humana.
+  •    Registrar tiempos de respuesta con alta precisión.
+  •    Capturar capturas de pantalla, errores, logs de ejecución, métricas de rendimiento.
+
+Cómo se usan
+  1.   Definir las transacciones críticas a automatizar.
+  2.   Implementar scripts de prueba automatizada.
+  3.   Ejecutar las pruebas n veces (por ejemplo, 20 iteraciones por caso).
+  4.   Exportar los resultados:
+          o  Tiempos de respuesta en ms.
+          o  Número de fallas.
+          o  Secuencias de error.
+   5. Calcular métricas:
+         o % de casos aprobados
+         o MTBF (Selenium/JMeter + contadores)
+         o Throughput (JMeter)
+         o Tiempo promedio de respuesta
+
+
+Resultados que produce
+   •   CSV con tiempos de respuesta.
+   •   Archivos de log.
+   •   Reportes HTML de ejecución.
+
+Ejemplo real
+En banca móvil (ej.: Action Mobile Bank Aceh), estudios publicados ejecutaron baterías de pruebas automatizadas para medir tiempos
+de respuesta y fallos recurrentes.
+
+
+
+2. Pruebas manuales (test cases)
+
+¿Para qué sirven?
+   •   Medir Corrección, Usabilidad operativa, Integridad (pruebas negativas), Testabilidad, Mantenibilidad.
+
+Cómo se usan (paso a paso)
+   1. Definir la lista de requisitos del sistema.
+   2. Diseñar un test case por requisito.
+   3. Ejecutar manualmente y registrar:
+         o Resultado esperado
+         o Resultado obtenido
+         o Evidencia (captura de pantalla)
+   4. Clasificar cada caso como Aprobado/Fallado.
+   5. Calcular:
+         o % de casos aprobados
+         o Número de defectos encontrados
+
+
+Resultados que produce
+   •   Matriz de casos de prueba.
+   •   Evidencias visuales.
+   •   Clasificación de fallas (bug severity / bug priority).
+
+Ejemplo
+Estudios de calidad en sistemas SIATA, SITASI y Sampos (ResearchGate) aplican encuestas y test cases manuales para evaluar
+Corrección y Usabilidad.
+
+
+
+3. Encuestas a usuarios (Likert, SUS, cuestionarios personalizados)
+
+¿Para qué sirven?
+   •   Medir Usabilidad, Percepción de Fiabilidad, Percepción de Corrección, Satisfacción general, Experiencia de uso.
+Cómo se usan
+   1.   Seleccionar muestra representativa de usuarios.
+   2.   Aplicar encuesta con escala Likert (1–5).
+   3.   Registrar resultados en hoja Excel o Google Forms.
+   4.   Calcular:
+
+
+
+
+   5. Clasificar según escala: Excelente, Bueno, Regular, Deficiente.
+
+Resultados que produce
+   •    Calificación porcentual de Usabilidad.
+   •    Indicadores de satisfacción.
+   •    Gráficos comparativos.
+
+Ejemplo
+Los 5 casos académicos y bancarios presentados (SITASI, SIATA, Sampos, Action Bank Aceh, Asistencia de Empleados) usaron
+encuestas Likert para evaluar Usabilidad.
+4. Logs del sistema (servidor, aplicación, API, base de datos)
+
+¿Para qué sirven?
+  •   Medir Fiabilidad, Integridad, Eficiencia, Interoperabilidad, Testabilidad.
+
+Cómo se usan (paso a paso)
+  1. Activar logs en backend o servidor (nivel INFO/DEBUG).
+  2. Registrar:
+        o Errores de aplicación
+        o Tiempos de ejecución
+        o Intentos de acceso fallidos
+        o Errores de API
+        o Latencias en endpoints
+  3. Exportar los logs a CSV o viewer (Kibana, Grafana, Datadog).
+  4. Calcular:
+        o Errores por hora
+        o Errores por 100 transacciones
+        o Intentos de acceso no autorizado
+        o Tiempos promedio de endpoints
+
+
+Resultados que produce
+  •   Trazabilidad total de incidentes.
+  •   Historial de fallas y advertencias.
+  •   Datos suficientes para calcular MTBF.
+
+Ejemplo real
+En sistemas bancarios publicados en la literatura, logs revelaron:
+
+   •   Caídas repetidas del servidor
+   •   Bugs en la función TopUp
+   •   Errores en las mutaciones de cuenta
+
+
+
+5. Código fuente (para métricas de mantenibilidad, flexibilidad, reusabilidad)
+
+¿Para qué sirve?
+   •   Medir Mantenibilidad, Flexibilidad, Reusabilidad, Modularidad, Complejidad, Autodocumentación.
+
+Herramientas permitidas
+   •   SonarQube
+   •   Radon (Python)
+   •   ESLint / Prettier (JS)
+   •   PMD, Checkstyle (Java)
+   •   CodeQl / GitHub Security Analysis
+
+Cómo se usan (paso a paso)
+   1. Escanear el repositorio con la herramienta elegida.
+   2. Obtener:
+         o Duplicación de código
+         o Complejidad ciclomática
+         o Profundidad del árbol de llamadas
+            o Comentarios vs líneas de código
+            o Componentes fuertemente acoplados
+   3. Identificar “hotspots” (módulos de alto riesgo).
+   4. Calcular métricas:
+         o Índice de mantenibilidad
+         o Módulos reutilizables
+         o % de dependencias internas
+
+
+Resultados que produce
+   •     Métricas numéricas objetivas.
+   •     Gráficos de calidad de código.
+   •     Alertas de seguridad y mantenimiento.
+
+Ejemplo
+En proyectos FAA (referencia: DOT/FAA/CT-91/1), se utiliza complejidad ciclomática ≤ 10 como requisito para software aeronáutico.
+
+
+
+
+⭐ RESUMEN
+       Tecnología               Para qué sirve                       Factores evaluados                        Qué produce
+
+Pruebas              Medir rendimiento, disponibilidad,   Corrección, Fiabilidad, Eficiencia,
+                                                                                                Tiempos, fallas, logs, reportes
+automatizadas        estabilidad                          Testabilidad
+
+Pruebas manuales     Validar requisitos funcionales       Corrección, Usabilidad, Integridad    Casos aprobados, defectos, evidencias
+
+Encuestas a usuarios Medir usabilidad y satisfacción      Usabilidad, Corrección percibida      Promedios Likert, porcentajes
+     Tecnología                 Para qué sirve              Factores evaluados                        Qué produce
+
+                                                 Fiabilidad, Integridad, Eficiencia,
+Logs del sistema     Medir fallas reales                                               MTBF, errores de API, fallas, latencias
+                                                 Interoperabilidad
+
+                                                 Mantenibilidad, Flexibilidad,         Ciclomática, Mantenibilidad, acoplamiento,
+Análisis de código   Evaluar calidad interna
+                                                 Reusabilidad                          duplicación
+
+
+
+
+Paso 5 — Calcular los indicadores
+Ejemplo general:
+
+55555555555555555555555
+
+
+
+La fórmula general del modelo de McCall es:
+
+
+
+
+Pero en la práctica, el punto crítico es:
+    ¿Cómo se obtienen los valores (c_1, c_2, c_3, …)?
+    ¿Quién decide cuánto pesa cada métrica?
+    ¿Qué método garantiza objetividad?
+
+
+
+
+🔵 1. ¿QUÉ SON LAS PONDERACIONES (c_i)?
+Las ponderaciones representan la importancia relativa de cada métrica dentro del factor de calidad.
+
+Ejemplos:
+
+   •   En Fiabilidad, puede ser más importante el MTBF
+   •   En Usabilidad, puede ser más importante la encuesta del usuario
+   •   En Eficiencia, puede ser más importante el tiempo de respuesta
+
+Sin ponderaciones, todas las métricas tendrían el mismo valor, lo cual no es realista en sistemas críticos.
+
+
+
+
+🔵 2. ¿DE DÓNDE SALEN LAS PONDERACIONES? (EXPLICACIÓN COMPLETA)
+Las ponderaciones NO se inventan.
+Se obtienen mediante uno de estos tres métodos formales, los únicos aceptados internacionalmente:
+Método 1 — Juicio de Expertos (Engineering Judgment / DELPHI)
+Usado en:
+
+   •    FAA (Federal Aviation Administration)
+   •    NASA
+   •    Industria bancaria
+   •    Industria médica
+   •    Proyectos de software críticos
+
+Cómo funciona:
+
+   1.   Se reúnen 3 a 7 expertos (ingenieros senior, QA leads, arquitectos).
+   2.   Se muestra una lista de métricas del factor (ej.: Fiabilidad = MTBF, Tasa de fallas, Disponibilidad).
+   3.   Cada experto asigna un valor de importancia de 1 a 5 a cada métrica.
+   4.   Se promedian los valores.
+   5.   Se normalizan para que la suma sea 1.
+
+Ejemplo real:
+
+Digamos que 5 expertos evaluaron la importancia de cada métrica de Fiabilidad:
+
+   Métrica     Experto 1 Experto 2 Experto 3 Experto 4 Experto 5 Promedio
+
+MTBF           5         4         5         5         4         4.6
+
+Tasa de fallas 3         4         3         3         4         3.4
+
+Disponibilidad 4         4         4         3         4         3.8
+Ahora normalizamos:
+
+Suma = 4.6 + 3.4 + 3.8 = 11.8
+
+
+
+
+Resultado final (obtenido de forma profesional):
+
+
+
+
+Este método proviene de prácticas reales documentadas por el RADC (Rome Air Development Center, 1977).
+
+
+
+
+Método 2 — AHP (Analytic Hierarchy Process)
+Usado mundialmente por:
+   •    Ingeniería de software avanzada
+   •    Gestión de calidad
+   •    Tesis de investigación
+   •    Gobierno / Proyectos BID/BM
+   •    Modelos multicriterio
+
+Cómo funciona:
+
+   1.   Se comparan las métricas de dos en dos.
+   2.   Se construye una matriz de comparaciones pareadas.
+   3.   Se aplica el cálculo de eigenvectores (AHP estándar).
+   4.   El resultado son los pesos normalizados.
+
+AHP se usa cuando el proyecto quiere un método matemáticamente sustentado.
+
+222222222222222222222222222222222222222222
+
+
+
+
+⭐ MÉTODO 2 — AHP (Analytic Hierarchy Process)
+
+Ejemplo :
+
+Vamos a calcular las ponderaciones para el factor FIABILIDAD, usando 3 métricas:
+
+   1. MTBF
+   2. Tasa de fallas
+   3. Disponibilidad
+PASO 1 — Comparar las métricas de dos en dos
+En AHP se usa una escala clásica:
+
+ Valor       Interpretación
+
+1        Igual importancia
+
+3        Importancia moderada
+
+5        Importancia fuerte
+
+7        Importancia muy fuerte
+
+9        Importancia extrema
+
+2,4,6,8 Valores intermedios
+
+
+Los ingenieros (o alumnos, en clase) hacen comparaciones.
+
+Supongamos que el equipo opina:
+
+    •    MTBF es más importante que Tasa de Fallas → nivel 3.
+    •    MTBF es ligeramente más importante que Disponibilidad → nivel 2.
+    •    Disponibilidad es más importante que Tasa de Fallas → nivel 3.
+PASO 2 — Construir la matriz de comparaciones pareadas
+La matriz AHP se arma así:
+
+   Métrica    MTBF Tasa Fallas Disponibilidad
+
+MTBF          1      3          2
+
+Tasa Fallas   1/3    1          1/3
+
+Disponibilidad 1/2   3          1
+
+
+Si: Tasa de Fallas = (1/3) × MTBF
+
+Esto significa que en términos de importancia o preferencia en tu modelo de decisión, consideras que el MTBF es 3 veces más
+importante que la Tasa de Fallas.
+
+En tu análisis de decisión, estás asignando tres veces más peso al criterio MTBF que al criterio Tasa de Fallas, reflejando que
+consideras la confiabilidad (MTBF) más significativa que la frecuencia de fallas en tu evaluación.
+
+   •   Te importa MÁS que los equipos duren mucho tiempo funcionando (MTBF alto)
+   •   Te importa MENOS qué tan frecuentemente fallan en términos estadísticos
+
+"Prefieres un equipo que falle poco frecuente pero por MUCHO TIEMPO, sobre uno que falle muy FRECUENTEMENTE
+estadísticamente pero por periodos cortos"
+Cada posición (i, j) contiene la importancia de i respecto a j.
+Y la matriz es recíproca:
+
+
+
+
+PASO 3 — Sumar cada columna
+Métrica          MTBF            Tasa Fallas   Disponibilidad
+
+Sum       1 + 1/3 + 1/2 = 1.833 3 + 1 + 3 = 7 2 + 1/3 + 1 = 3.333
+
+
+
+
+PASO 4 — Normalizar la matriz
+Dividimos cada celda entre la suma de su columna.
+
+Columna MTBF (sum = 1.833)
+
+   •   MTBF → (1 / 1.833 = 0.545)
+   •   Tasa Fallas → (0.333 / 1.833 = 0.181)
+   •   Disponibilidad → (0.5 / 1.833 = 0.273)
+
+Columna Tasa Fallas (sum = 7)
+
+   •   MTBF → (3/7 = 0.429)
+   •   Tasa Fallas → (1/7 = 0.143)
+  •   Disponibilidad → (3/7 = 0.429)
+
+Columna Disponibilidad (sum = 3.333)
+
+  •   MTBF → (2/3.333 = 0.600)
+  •   Tasa Fallas → (0.333/3.333 = 0.100)
+  •   Disponibilidad → (1/3.333 = 0.300)
+
+
+
+PASO 5 — Calcular el eigenvector (promedio de cada fila)
+⭐ RESULTADO FINAL (PESOS AHP)
+   Métrica    Peso AHP
+
+MTBF          0.524
+
+Disponibilidad 0.334
+
+Tasa de Fallas 0.141
+
+
+Suma total:
+
+
+
+
+⭐ Interpretación
+   •   MTBF es la métrica más importante (52.4%).
+   •   Disponibilidad tiene importancia media (33.4%).
+   •   Tasa de fallas pesa menos (14.1%).
+
+
+
+
+⭐ CÓMO SE USA PARA CALCULAR EL FACTOR
+Supongamos:
+
+   •   MTBF normalizado = 0.85
+   •   Disponibilidad = 0.90
+   •   Tasa de fallas = 0.75
+
+
+
+
+222222222222222222222222222222222222222222
+
+
+
+
+Método 3 — Ponderación basada en riesgo
+Usado en:
+
+   •   Ciberseguridad
+   •   Aerospace software (DO-178C)
+   •   PCI-DSS
+   •   ISO 27001
+
+Cómo funciona:
+
+   1. Para cada métrica se evalúa el impacto del fallo.
+   2. Se asignan prioridades según criticidad.
+   3. Se normaliza a valores entre 0 y 1.
+
+Ejemplo: en Integridad, “Mecanismo de autenticación” tiene peso mayor que “Almacenamiento en caché seguro”.
+Ejemplo explicado:
+
+Usaremos el factor INTEGRIDAD con 3 métricas:
+
+   1. Autenticación
+   2. Autorización / Roles
+   3. Auditoría (logs)
+
+
+
+PASO 1 — Evaluar criticidad del fallo
+Usamos la escala de impacto típica de ISO 27005:
+
+Impacto Valor
+
+Bajo       1
+
+Medio      2
+
+Alto       3
+
+Muy alto 4
+
+Crítico    5
+
+
+Los expertos califican el IMPACTO DE QUE ESA MÉTRICA FALLE.
+
+Ejemplo:
+   Métrica    Impacto si falla                   Justificación
+
+Autenticación 5                  Sin autenticación, hay acceso total indebido
+
+Roles         4                  Un usuario podría tener permisos indebidos
+
+Logs          3                  Sin logs, no hay trazabilidad ni detección
+
+
+
+
+PASO 2 — Normalizar los valores
+Suma = 5 + 4 + 3 = 12
+
+
+
+
+PASO 3 — Insertar los valores medidos
+Supongamos:
+
+   •    Autenticación: cumple 95%
+   •    Roles: cumple 80%
+   •    Logs: cumple 60%
+Convertimos a decimales:
+
+   •   Autenticación = 0.95
+   •   Roles = 0.80
+   •   Logs = 0.60
+
+
+
+PASO 4 — Calcular el factor
+
+
+
+
+⭐ Interpretación
+   •   La autenticación tiene el mayor peso porque un fallo allí sería catastrófico.
+   •   Todo proviene del análisis de impacto, no de suposiciones.
+   •   Los números se obtienen con un método estándar de gestión de riesgos.
+
+
+
+
+🔵 3. ¿QUÉ PASA SI NO HAY EXPERTOS DISPONIBLES? (PARA CURSOS)
+En un ambiente académico, se permite un método simplificado:
+Método académico estructurado:
+
+   1.    El grupo lista las métricas del factor.
+   2.    Cada alumno asigna una importancia (1–5).
+   3.    Se hace un promedio grupal.
+   4.    Se normaliza.
+
+Este método enseña objetividad sin necesidad de expertos senior.
+
+
+
+
+🔵 4. EJEMPLO YA CALCULADO
+
+Métricas del factor Corrección:
+
+   •     (m_1): Casos de prueba aprobados
+   •     (m_2): Cobertura de requisitos
+
+Paso 1 — Asignación de importancia por alumnos
+
+Supongamos que 10 alumnos evaluaron:
+
+       Métrica    Promedio de importancia (1–5)
+
+Casos aprobados 4.8
+
+Cobertura         3.2
+
+
+Paso 2 — Normalizar
+Suma total = 4.8 + 3.2 = 8.0
+
+
+
+
+Paso 3 — Insertar métrica medida
+
+Supongamos:
+
+   •   (m_1 = 0.90) (90% casos aprobados)
+   •   (m_2 = 0.80) (80% cobertura de requisitos)
+
+Paso 4 — Calcular el factor
+
+
+
+
+🔵 5. EJEMPLO COMPLETO PARA MANTENIBILIDAD
+
+Métricas:
+
+   •   Complejidad ciclomática
+   •   Índice de mantenibilidad
+   •   MTTR
+
+Los alumnos asignan importancias:
+
+          Métrica            Importancia
+
+Complejidad                  5
+
+MI (Indice de Mantenibilidad) 4
+
+MTTR                         3
+
+
+Normalizar:
+
+Suma = 5 + 4 + 3 = 12
+
+
+
+
+Métricas medidas:
+
+   •   Ciclomática: 13 → normalizado a 0.65
+   •   MI: 65/100 → 0.65
+   •   MTTR: 45 minutos → normalizado a 0.75
+
+Cálculo:
+
+
+
+
+🔵 6. ¿QUÉ DEBEN ENTREGAR LOS ALUMNOS?
+En el informe deben incluir:
+
+
+✔ 1. Lista de métricas seleccionadas
+
+✔ 2. Tabla de importancia asignada (1–5)
+
+✔ 3. Cálculo de ponderaciones normalizadas
+
+✔ 4. Valores medidos de las métricas
+
+✔ 5. Fórmula aplicada
+✔ 6. Resultado final
+
+✔ 7. Interpretación (Excelente/Bueno/Regular/Deficiente)
+
+
+55555555555555555555555
+
+Paso 6 — Interpretar resultados
+Valoración sugerida:
+
+   •   90–100% → Excelente
+   •   75–89% → Bueno
+   •   60–74% → Regular
+   •   <60% → Deficiente
+
+Paso 7 — Redactar recomendaciones de mejora
+Cada factor debe finalizar con hallazgos y acciones propuestas.
+

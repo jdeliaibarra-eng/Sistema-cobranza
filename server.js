@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { Pool } = require('pg');
 const cors = require('cors');
 const app = express();
@@ -6,11 +7,11 @@ app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'deudas_db',
-  password: 'postgres',
-  port: 5432,
+  user: process.env.DB_USER || 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  database: process.env.DB_NAME || 'deudas_db',
+  password: process.env.DB_PASSWORD || 'postgres',
+  port: parseInt(process.env.DB_PORT || '5432', 10),
 });
 
 // ==================== MÓDULO: DEUDAS (ya existía) ====================
@@ -222,6 +223,11 @@ app.get('/deudas/:id/historial', async (req, res) => {
     ORDER BY g.fecha_gestion
   `, [req.params.id]);
   res.json(result.rows);
+});
+
+// Servir la interfaz web en la raíz (http://localhost:3000)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(3000, () => console.log('Servidor corriendo en http://localhost:3000'));
